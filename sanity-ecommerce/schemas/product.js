@@ -27,6 +27,11 @@ export default {
             }
         },
         {
+            name: 'quantity',
+            title: 'Quantity',
+            type: 'number'
+        },
+        {
             name: 'price',
             title: 'Price',
             type: 'number'
