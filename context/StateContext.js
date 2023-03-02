@@ -9,6 +9,10 @@ export const StateContext = ({ children }) => {
   const [qty, setQty] = useState(1);
   const [cartItems, setcartItems] = useState([]);
 
+  useEffect(()=>{
+    console.log(totalQuantity)
+  },[totalQuantity])
+
   const onAdd = () => {
     setQty((prevQty) => prevQty + 1);
   };
@@ -28,7 +32,6 @@ export const StateContext = ({ children }) => {
     if (productInCart) {
       const updatedCart = cartItems.map((cartItem) => {
         if (cartItem._id === product._id) {
-          console.log("tgybuhdw");
           return { ...cartItem, quantity: cartItem.quantity + quantity };
         }
       });
@@ -49,6 +52,7 @@ export const StateContext = ({ children }) => {
   const toogleCartItemQuantity = (id, value) => {
     const foundProduct = cartItems.find((cartItem) => cartItem._id === id);
     const updatedCart = cartItems.filter((cartItem) => cartItem._id !== id);
+
     if (value === "inc") {
       setcartItems([
         ...updatedCart,
@@ -56,25 +60,30 @@ export const StateContext = ({ children }) => {
       ]);
       setTotalQuantity((prevQuantity) => prevQuantity + 1);
       setTotalPrice(
-        (prevPrice) => prevPrice + foundProduct.price * foundProduct.quantity
+        (prevPrice) => prevPrice + foundProduct.price 
       );
     } else if (value === "dec") {
-      setcartItems([
-        ...updatedCart,
-        { ...foundProduct, quantity: foundProduct.quantity - 1 },
-      ]);
-      setTotalQuantity((prevQuantity) => prevQuantity - 1);
-      setTotalPrice(
-        (prevPrice) => prevPrice - foundProduct.price * foundProduct.quantity
-      );
+      if(foundProduct.quantity > 1){
+        setcartItems([
+          ...updatedCart,
+          { ...foundProduct, quantity: foundProduct.quantity - 1 },
+        ]);
+        setTotalQuantity((prevQuantity) => prevQuantity - 1);
+        setTotalPrice(
+          (prevPrice) => prevPrice - foundProduct.price 
+        );
+      }
     }
   };
+
   return (
     <Context.Provider
       value={{
+        cartItems,
         totalPrice,
         totalQuantity,
         showCart,
+        setShowCart,
         qty,
         onAdd,
         onMinus,

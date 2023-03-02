@@ -5,11 +5,11 @@ import { Toaster } from "react-hot-toast";
 
 export default function App({ Component, pageProps }) {
   return (
-    <Layout>
-      <StateContext>
-        <Toaster/>
+    <StateContext>
+      <Layout>
+        <Toaster />
         <Component {...pageProps} />
-      </StateContext>
-    </Layout>
+      </Layout>
+    </StateContext>
   );
 }
