@@ -3,6 +3,7 @@ import {Product, FooterBanner, HeroBanner} from "../components"
 import {client} from "../lib/client"
 
 const index = ({products, bannerProducts}) => {
+  
   return (
     <>
       <HeroBanner bannerProduct={bannerProducts.length && bannerProducts[0]}/>
