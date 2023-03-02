@@ -51,23 +51,28 @@ export const StateContext = ({ children }) => {
 
   const toogleCartItemQuantity = (id, value) => {
     const foundProduct = cartItems.find((cartItem) => cartItem._id === id);
-    const updatedCart = cartItems.filter((cartItem) => cartItem._id !== id);
-
+    
     if (value === "inc") {
-      setcartItems([
-        ...updatedCart,
-        { ...foundProduct, quantity: foundProduct.quantity + 1 },
-      ]);
+      const updatedCart = cartItems.map(cartItem => {
+        if (cartItem._id === id) {
+          return { ...cartItem, quantity: cartItem.quantity+1 };
+        }
+        return cartItem;
+      });
+      setcartItems(updatedCart)
       setTotalQuantity((prevQuantity) => prevQuantity + 1);
       setTotalPrice(
         (prevPrice) => prevPrice + foundProduct.price 
       );
     } else if (value === "dec") {
+      const updatedCart = cartItems.map(cartItem => {
+        if (cartItem._id === id) {
+          return { ...cartItem, quantity: cartItem.quantity-1 };
+        }
+        return cartItem;
+      });
       if(foundProduct.quantity > 1){
-        setcartItems([
-          ...updatedCart,
-          { ...foundProduct, quantity: foundProduct.quantity - 1 },
-        ]);
+        setcartItems(updatedCart);
         setTotalQuantity((prevQuantity) => prevQuantity - 1);
         setTotalPrice(
           (prevPrice) => prevPrice - foundProduct.price 
